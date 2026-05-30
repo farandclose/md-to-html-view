@@ -1,0 +1,32 @@
+{
+  "name": "md-to-html-view",
+  "version": "1.0.0",
+  "description": "Render any Markdown file as a clean, Google-Doc-style, read-only HTML page. Zero dependencies, no build step, no network calls.",
+  "bin": {
+    "md-to-html-view": "sync-doc-html.js",
+    "md-to-html-view-watch": "watch-doc-html.js"
+  },
+  "scripts": {
+    "example": "node sync-doc-html.js examples/sample.md"
+  },
+  "keywords": [
+    "markdown",
+    "html",
+    "viewer",
+    "renderer",
+    "converter",
+    "docs",
+    "google-doc",
+    "zero-dependencies",
+    "offline"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=14"
+  },
+  "files": [
+    "sync-doc-html.js",
+    "watch-doc-html.js",
+    "doc-template.html"
+  ]
+}
