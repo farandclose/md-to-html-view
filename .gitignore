@@ -9,6 +9,9 @@ npm-debug.log*
 .vscode/
 .idea/
 
+# Brainstorming visual-companion scratch files
+.superpowers/
+
 # Generated doc views are kept out of git by default. The example output in
 # examples/ is force-added so the repo ships a ready-to-open sample.
 *-doc.html
