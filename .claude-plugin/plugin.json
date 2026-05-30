@@ -1,0 +1,19 @@
+{
+  "name": "md-to-html-view",
+  "version": "1.0.0",
+  "description": "Render any Markdown file as a clean, read-only, Google-Doc-style HTML page. Zero dependencies, offline, deterministic.",
+  "author": {
+    "name": "Saurabh Mehta",
+    "url": "https://github.com/farandclose"
+  },
+  "homepage": "https://github.com/farandclose/md-to-html-view",
+  "license": "MIT",
+  "keywords": [
+    "markdown",
+    "html",
+    "viewer",
+    "renderer",
+    "docs",
+    "offline"
+  ]
+}

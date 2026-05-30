@@ -1,0 +1,14 @@
+{
+  "name": "farandclose-skills",
+  "owner": {
+    "name": "Saurabh Mehta",
+    "url": "https://github.com/farandclose"
+  },
+  "plugins": [
+    {
+      "name": "md-to-html-view",
+      "source": "./",
+      "description": "Render any Markdown file as a clean, read-only, Google-Doc-style HTML page. Skill + slash command + CLI. Zero dependencies, offline."
+    }
+  ]
+}

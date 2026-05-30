@@ -1,33 +1,59 @@
 # md-to-html-view
 
 Render any Markdown file as a clean, Google-Doc-style, read-only HTML page.
-Zero dependencies, no build step, no network or API calls. Just Node.js to
+Zero dependencies, no build step, no network or API calls — just Node.js to
 generate and a browser to view.
 
-## Why
+Ships three ways: as an **agent skill** (Claude Code, Codex CLI, Gemini CLI,
+and any `SKILL.md`-compatible agent), as a **Claude Code plugin** installable
+from a marketplace, and as a plain **CLI**.
 
-Sometimes you want to share or review a Markdown document as a polished page
-instead of raw text, without a static-site generator or pushing to a service.
-This tool takes any `path/to/foo.md` and produces a self-contained sibling
-`path/to/foo-doc.html` you can open directly or send to someone.
+## What it does
 
-- Self-contained output: one HTML file, no external assets, works offline.
-- Deterministic: the same Markdown always renders the same HTML. No LLM,
+Point it at `path/to/foo.md` and it produces a self-contained sibling
+`path/to/foo-doc.html` you can open directly, print, or send to someone.
+
+- **Self-contained:** one HTML file, no external assets, works offline.
+- **Deterministic:** the same Markdown always renders the same HTML. No LLM,
   no API, no tokens spent.
-- Tiny: three small files, only Node's standard library.
+- **Tiny:** a small generator plus an inline browser renderer, only Node's
+  standard library.
 
-## Requirements
+Requires Node.js 14+. No `npm install` needed (there are no third-party deps).
 
-Node.js 14 or newer. No `npm install` needed (there are no third-party deps).
+## Install
 
-## Quick start
+### As a Claude Code plugin (marketplace)
+
+```
+/plugin marketplace add farandclose/md-to-html-view
+/plugin install md-to-html-view
+```
+
+This installs the `md-to-html-view` skill and the `/md-to-html-view:render`
+command. Ask Claude to render a `.md` file, or run
+`/md-to-html-view:render path/to/foo.md`.
+
+### As a skill for Codex CLI / Gemini CLI / any SKILL.md agent
 
 ```bash
-# Generate foo-doc.html next to foo.md
-node sync-doc-html.js path/to/foo.md
+git clone https://github.com/farandclose/md-to-html-view.git
+cd md-to-html-view
+bash install.sh
+```
 
-# Try the bundled example
-node sync-doc-html.js examples/sample.md
+The installer copies the skill into `~/.claude/skills/` (if Claude Code is
+present) and `~/.agents/skills/` (the universal location read by Codex,
+Gemini, and others). Then ask your agent to render a `.md` file as HTML.
+
+### As a CLI (no agent)
+
+```bash
+# Run without installing
+npx md-to-html-view path/to/foo.md
+
+# Or from a clone
+node skills/md-to-html-view/scripts/sync-doc-html.js examples/sample.md
 ```
 
 Open the generated `*-doc.html` in any browser.
@@ -37,17 +63,17 @@ Open the generated `*-doc.html` in any browser.
 Re-generate automatically whenever the Markdown changes:
 
 ```bash
-node watch-doc-html.js path/to/foo.md
+node skills/md-to-html-view/scripts/watch-doc-html.js path/to/foo.md
 ```
 
 Leave it running while you edit, then refresh the browser. Ctrl+C to stop.
 
 ## How it works
 
-1. `sync-doc-html.js` reads your Markdown file.
-2. If the sibling HTML does not exist, it scaffolds one from
-   `doc-template.html`, filling in the title (first `# H1`, or the filename)
-   and a source-path label.
+1. The generator reads your Markdown file.
+2. If the sibling HTML does not exist, it scaffolds one from the bundled
+   `assets/doc-template.html`, filling in the title (first `# H1`, or the
+   filename) and a source-path label.
 3. It injects the raw Markdown into a
    `<script type="text/plain" id="markdown-source">` block in that HTML.
 4. Opening the HTML runs a small inline parser that converts the Markdown to
@@ -56,12 +82,25 @@ Leave it running while you edit, then refresh the browser. Ctrl+C to stop.
 Generation is plain file and string work in Node. Rendering is a small
 client-side parser. Nothing leaves your machine.
 
-## Files
+## Repository layout
 
-- `sync-doc-html.js`: one-shot generator.
-- `watch-doc-html.js`: watcher (runs once on start, then on every change).
-- `doc-template.html`: the page shell plus the inline Markdown renderer.
-  Placeholders: `{{TITLE}}` and `{{SOURCE_PATH}}`.
+```
+.claude-plugin/
+  plugin.json            Claude Code plugin manifest
+  marketplace.json       Single-plugin marketplace (powers /plugin install)
+skills/
+  md-to-html-view/
+    SKILL.md             The portable skill (source of truth, all rails)
+    scripts/
+      sync-doc-html.js   One-shot generator (also the CLI bin)
+      watch-doc-html.js  Watcher
+    assets/
+      doc-template.html  Page shell + inline Markdown renderer
+commands/
+  render.md              /md-to-html-view:render slash command
+install.sh               Cross-agent installer (Codex / Gemini / universal)
+examples/                Bundled sample.md and its rendered output
+```
 
 ## Supported Markdown
 
@@ -83,7 +122,7 @@ this order:
 3. The Markdown file's own directory (the chip then shows just the filename).
 
 ```bash
-node sync-doc-html.js docs/notes.md --root .
+node skills/md-to-html-view/scripts/sync-doc-html.js docs/notes.md --root .
 ```
 
 ## License

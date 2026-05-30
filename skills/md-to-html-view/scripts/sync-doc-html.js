@@ -34,7 +34,7 @@ if (!fs.existsSync(markdownPath)) {
 }
 
 const htmlPath = markdownPath.replace(/\.md$/i, "-doc.html");
-const templatePath = path.join(__dirname, "doc-template.html");
+const templatePath = path.join(__dirname, "..", "assets", "doc-template.html");
 const sourcePattern = /(<script\b(?=[^>]*\btype="text\/plain")(?=[^>]*\bid="markdown-source")[^>]*>)([\s\S]*?)(<\/script>)/;
 
 const markdownRaw = fs.readFileSync(markdownPath, "utf8");
