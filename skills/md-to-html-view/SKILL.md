@@ -36,7 +36,7 @@ This writes a sibling `path/to/foo-doc.html`. Open it in any browser. Then tell 
 node "<skill-dir>/scripts/watch-doc-html.js" path/to/foo.md
 ```
 
-**Source label** — the page header shows a "Source:" chip. Its path is resolved as: `--root <dir>` if passed → nearest ancestor with a `.git` folder → the file's own directory.
+**Source label** — the page header subtitle ("Read-only render of file: …") shows the source file path. It's resolved as: `--root <dir>` if passed → nearest ancestor with a `.git` folder → the file's own directory.
 
 ```bash
 node "<skill-dir>/scripts/sync-doc-html.js" docs/notes.md --root .

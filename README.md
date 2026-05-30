@@ -114,12 +114,12 @@ it is fast and reliable.
 
 ## The source-path label
 
-The page header shows a small "Source:" chip with the file path, resolved in
-this order:
+The page header subtitle ("Read-only render of file: …") shows the file path,
+resolved in this order:
 
 1. `--root <dir>`, if you pass it.
 2. The nearest ancestor directory that contains a `.git` folder.
-3. The Markdown file's own directory (the chip then shows just the filename).
+3. The Markdown file's own directory (the subtitle then shows just the filename).
 
 ```bash
 node skills/md-to-html-view/scripts/sync-doc-html.js docs/notes.md --root .
